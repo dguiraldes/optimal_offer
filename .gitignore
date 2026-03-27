@@ -30,3 +30,8 @@ htmlcov/
 .DS_Store
 
 .env
+
+test.ipynb
+ideas.md
+
+data_samples/*
