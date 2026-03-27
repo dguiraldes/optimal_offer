@@ -11,8 +11,12 @@ dependencies = [
     "pandas",
     "numpy",
     "matplotlib",
+    "seaborn",
     "ipykernel",
     "pytest",
+    "pyarrow",
+    "fastparquet",
+    "python-dotenv",
     "linopy"
 ]
 
