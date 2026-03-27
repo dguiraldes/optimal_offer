@@ -2,6 +2,50 @@
 
 This repository contains the code for simulating optimal wind farm offering considering the day ahead and balancing markets. It's based on the Assignment 2 of the course "Renewables in Energy Markets" at DTU by Professor Jalal Kazempour in 2025.
 
+## Getting Started
+
+### Prerequisites
+- Python 3.11+
+- Git
+
+### Installation
+
+1. **Clone the repository**
+```bash
+   git clone git@github.com:dguiraldes/optimal_offer.git
+   cd optimal_offer
+```
+
+2. **Create and activate a virtual environment**
+
+   macOS/Linux:
+```bash
+   python -m venv .venv
+   source .venv/bin/activate
+```
+
+   Windows:
+```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+```
+
+3. **Install the project and its dependencies**
+```bash
+   pip install -e .
+```
+
+That's it. The `src/` package is now importable from anywhere in the project,
+including notebooks.
+
+
+### Environment variables
+Some data sources require API keys. Copy the example file and fill in your credentials:
+```bash
+cp .env.example .env
+```
+Never commit the `.env` file — it is listed in `.gitignore`.
+
 ## Data clients
 
 All API clients live under `src/data/` as flat modules:
