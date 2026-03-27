@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"   
+
+[project]
+name = "optimal_bidding"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "requests",
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "ipykernel",
+    "pytest",
+    "linopy"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
