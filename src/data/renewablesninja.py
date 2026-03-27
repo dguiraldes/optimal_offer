@@ -1,8 +1,11 @@
 import json
+import os
 from dataclasses import dataclass
+from io import StringIO
 
 import pandas as pd
 import requests
+from dotenv import load_dotenv
 
 from src.data.base import BaseAPI
 
@@ -44,7 +47,17 @@ _BASE_URL = "https://www.renewables.ninja/api"
 class RenewablesNinjaAPI(BaseAPI):
     """Client for the Renewables.ninja API."""
 
-    def __init__(self, token: str):
+    def __init__(self, token: str = None):
+        if token is None:
+            load_dotenv()  # No-op if no .env file exists
+            token = os.environ.get("renewables_ninja_api_token")
+
+        if token is None:
+            raise ValueError(
+                "No API token provided. Pass it as an argument or set "
+                "'renewables_ninja_api_token' in your environment or .env file."
+            )
+
         self._token = token
 
     # ------------------------------------------------------------------
@@ -122,7 +135,7 @@ class RenewablesNinjaAPI(BaseAPI):
 
     @staticmethod
     def _parse_ninja_response(data: dict) -> pd.DataFrame:
-        df = pd.read_json(json.dumps(data["data"]), orient="index")
+        df = pd.read_json(StringIO(json.dumps(data["data"])), orient="index")
         df.index = pd.to_datetime(df.index)
         df.index.name = "time"
         return df
