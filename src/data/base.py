@@ -10,6 +10,13 @@ class BaseAPI:
     Each subclass exposes its own named methods per endpoint.
     """
 
+    def __repr__(self) -> str:
+        methods = [
+            name for name in dir(self)
+            if not name.startswith("_") and callable(getattr(self, name))
+        ]
+        return f"{type(self).__name__}(endpoints={methods})"
+
     def _get(self, url: str, params: dict, timeout: int = 10):
         """
         Internal HTTP GET with error handling.
