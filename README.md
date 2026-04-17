@@ -148,3 +148,105 @@ __all__ = [
     "NewAPI",
 ]
 ```
+
+## Scenario generators
+
+Scenario generators live under `src/scenarios/`, with one subfolder per resource:
+
+```
+src/scenarios/
+    __init__.py              # Re-exports all generators
+    base.py                  # ScenarioModel (ABC) + ScenarioGenerator (front-end)
+    wind_production/
+        __init__.py          # WindProductionGenerator
+        conditional_nvp.py   # Conditional Real-NVP normalizing flow
+        gaussian_noise.py    # Gaussian noise baseline (placeholder)
+    spot_price/
+        __init__.py          # SpotPriceGenerator
+        arimax.py            # ARIMAX model (placeholder)
+    imbalance_direction/
+        __init__.py          # ImbalanceDirectionGenerator
+        markov_chain.py      # Markov chain model (placeholder)
+    imbalance_price/
+        __init__.py          # ImbalancePriceGenerator
+        conditional_sampling.py  # Conditional sampling (placeholder)
+```
+
+Pre-trained model weights are stored in `trained_models/` and training notebooks
+live in `model_training/`.
+
+### Using a generator
+
+```python
+from src.scenarios.wind_production import WindProductionGenerator
+
+# Load with the default pre-trained checkpoint
+gen = WindProductionGenerator(model="conditional_nvp")
+
+# Or point to a specific checkpoint
+gen = WindProductionGenerator(model="conditional_nvp", model_path="path/to/model.pt")
+
+# Check required inputs
+print(gen.required_inputs)  # ['wind_forecast']
+
+# Generate 200 scenarios conditioned on a day-ahead forecast (numpy array, shape (96,))
+scenarios = gen.generate(n_scenarios=200, wind_forecast=forecast)
+# scenarios.shape == (200, 96)
+```
+
+All generators follow the same interface — swap `WindProductionGenerator` for
+`SpotPriceGenerator`, `ImbalanceDirectionGenerator`, or `ImbalancePriceGenerator`.
+
+### Adding a new model to an existing generator
+
+1. Create a new file in the generator's folder, e.g. `src/scenarios/wind_production/my_model.py`:
+
+```python
+import numpy as np
+from src.scenarios.base import ScenarioModel, N_STEPS
+
+class MyModel(ScenarioModel):
+    name = "my_model"
+
+    def __init__(self, model_path=None):
+        # Load your pre-trained weights here
+        ...
+
+    @property
+    def required_inputs(self) -> list[str]:
+        return ["wind_forecast"]
+
+    def generate(self, n_scenarios: int, seed: int | None = None, **inputs) -> np.ndarray:
+        # Return array of shape (n_scenarios, N_STEPS)
+        ...
+```
+
+2. Register it in the generator's `__init__.py`:
+
+```python
+from src.scenarios.wind_production.my_model import MyModel
+
+class WindProductionGenerator(ScenarioGenerator):
+    _models = {
+        ...,
+        MyModel.name: MyModel,
+    }
+    _default_model_paths = {
+        ...,
+        "my_model": "trained_models/wind_generation/my_model.pt",  # optional default
+    }
+```
+
+3. Train the model in a notebook under `model_training/` and save weights to
+   `trained_models/`.
+
+### Adding a new generator (new resource type)
+
+1. Create a new folder `src/scenarios/my_resource/` with an `__init__.py` and
+   one `.py` file per model (following the pattern above).
+
+2. Register the generator in `src/scenarios/__init__.py`:
+
+```python
+from src.scenarios.my_resource import MyResourceGenerator
+```
