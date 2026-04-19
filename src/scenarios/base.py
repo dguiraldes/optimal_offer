@@ -86,7 +86,26 @@ class ScenarioGenerator:
         return self._model.required_inputs
 
     def generate(self, n_scenarios: int, seed: int | None = None, **inputs) -> np.ndarray:
-        """Delegate to the selected model."""
+        """Generate scenario paths by delegating to the selected model.
+
+        Parameters
+        ----------
+        n_scenarios : int
+            Number of independent scenario paths to produce.
+        seed : int or None
+            Random seed for reproducibility.
+        **inputs
+            Model-specific keyword arguments.  Check
+            ``self.required_inputs`` for the names expected by the
+            current model, and the generator/model class docstring
+            for detailed descriptions and examples.
+
+        Returns
+        -------
+        np.ndarray of shape (n_scenarios, N_STEPS)
+            Each row is one scenario path with ``N_STEPS = 96``
+            quarter-hourly values covering a 24-hour delivery day.
+        """
         return self._model.generate(n_scenarios, seed=seed, **inputs)
 
     def __repr__(self) -> str:
