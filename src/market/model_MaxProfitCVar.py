@@ -90,7 +90,7 @@ class BaseModel(linopy.Model):
             obj = (1 - beta) * expected_profit + beta * cvar
             self.add_objective(obj, sense="max")
 
-        self.solve(solver_name=solver_name)
+        self.solve(solver_name=solver_name, output_flag=False)
         self._compute_expected_profits()
 
     def _compute_expected_profits(self):
