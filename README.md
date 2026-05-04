@@ -1,6 +1,6 @@
-# Optimal wind farm offering simulation
+# Wind farm offering simulation
 
-This repository contains the code for simulating optimal wind farm offering considering the day ahead and balancing markets. It's based on the Assignment 2 of the course "Renewables in Energy Markets" at DTU by Professor Jalal Kazempour in 2025.
+This repository contains the code for simulating offshore wind farm offering considering the day ahead and balancing markets. It's based on the Assignment 2 of the course "Renewables in Energy Markets" at DTU by Professor Jalal Kazempour in 2025.
 
 ## Getting Started
 
