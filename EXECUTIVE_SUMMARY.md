@@ -57,21 +57,12 @@ Day-ahead offering appears to be the best strategy in terms of profit and risk b
 The fact that Mean-CVaR strategies work as expected reveals that scenarios created are working well. This is allowing risky strategies to "gamble" on market prices which is generating higher profits on average.  However, the critical assumption of own imbalance not affecting imbalance price nor imbalance direction is a strong assumption that likely does not hold in reality for a wind farm of 500 MW. This assumption might be giving an advantage to more risky strategies, since they are more exposed to imbalance prices and directions, but they are not affected by their own imbalance.
 
 
-## Conclusion and future work (brainstorming)
+## Conclusions and future work
 
-- This project provides a framework to compare different offering strategies for offshore wind farms. This methodology can be extended to solar pv and onshore wind farms. 
+This project establishes an end-to-end framework for comparing offering strategies for offshore wind farms in the day-ahead and balancing markets. The pipeline spans data collection, scenario generation, strategy definition, and evaluation of realised outcomes over a test period, providing a structured basis for assessing the profitability and risk of each strategy. The framework demonstrates that stochastic optimization methods behave as expected, with Mean-CVaR strategies responding predictably to their risk parameters, which validates the overall design. This methodology is modular and adaptable, providing a foundation for comparing a wide range of strategies. 
 
-- Include more markets, such as continuous intraday market, discrete intraday auctions and reserve capacity markets. 
+With targeted improvements, this framework has the potential to support real-world decision-making for wind farm operators. The current results are constrained by simplifying assumptions, most notably the use of aggregated DK2 offshore production (and their forecasts) as a proxy for a single farm, and the exclusion of the farm's own impact on system imbalance. Addressing these would change the relative performance of the strategies and produce findings that are more directly actionable. 
 
+Scenario generation is a field of study on its own, and could be improved from both data and modelling perspectives. Incorporating weather variables into spot price prediction, performing a deeper exploratory analysis of the relationships between all input variables, and validating scenarios against realised outcomes through rigorous benchmarking would all improve the quality of the stochastic inputs. Furthermore, training on a larger dataset and evaluating strategies over a longer and more diverse test period, covering different seasons and market regimes, would allow conclusions about the temporal stability of the results and reduce the risk of overfitting to a specific market period.
 
-FW:
-- Improve scenario generation
-- Include relationship of self generation and imbalance.
-- Include weather conditions for spot price prediction.
-- Generate wind power scenarios from wind power forecasts, and actual wind outcome on a certain location instead of using total offshore wind power in DK2. 
-
-- Deeper EDA to understand relationships with all variables.
-- Deep testing in scenario generation and establish a benchmark framework.
-- 
-
-- Include more strategies for comparison, such as minmax regret, robust optimization, min variance, etc.
+The same frameworkk could be improved to include more strategies, markets and technologies. Including additional optimisation approaches such as robust optimisation, min-max regret, and minimum-variance strategies would enrich the comparison and expose different aspects of the risk-return trade-off. Extending participation to the continuous intraday market, discrete intraday auctions, and reserve capacity markets would reflect the multi-market reality faced by wind farm operators. Finally, this methodology could be adapted to other renewable technologies such as solar PV, onshore wind and even storage with some modifications, making it a versatile tool for renewable energy market analysis.
