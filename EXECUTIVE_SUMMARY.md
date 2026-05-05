@@ -19,8 +19,8 @@ The following are the critical assumptions of the setup:
 The analysis consists in 5 steps:
 
 1. **Data collection and Exploration**: Identify potential data sources and perform exploratory data analysis.
-2. **Scenario generation**: Generate 1600 scenarios of spot price, imbalance price, imbalance direction, and wind power production given the available data one day before the delivery day. Generators are trained using data from March 2025 to January 2026, and tested on 51 days in February and March 2026.
-3. **Strategy Definition**: Define a set of offering strategies based on deterministic approaches or stochastic optimization.
+2. **Scenario generation**: Generate 1600 scenarios of spot price, imbalance price, imbalance direction, and wind power production given the available data one day before the delivery day. Data generators are trained using information from March 2025 to January 2026, and tested on 51 days in February and March 2026.
+3. **Strategy Definition**: Define a set of offering strategies based on deterministic approaches or stochastic optimisation.
 4. **Strategy Evaluation**: Evaluate the performance of each strategy in the test set of 51 days, using the generated scenarios to compute the expected profit and risk (standard deviation of profit) for each strategy.
 
 Figure 1 shows an example of the generated scenarios for a given delivery day, including spot price, imbalance price, imbalance direction and wind power production.
